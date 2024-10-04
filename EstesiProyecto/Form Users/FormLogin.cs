@@ -29,8 +29,6 @@ namespace EstesiProyecto
 
         }
 
-
-
         private void txtInicioSesion_Click(object sender, EventArgs e)
         {
             string username = txtUser.Text;
@@ -46,12 +44,11 @@ namespace EstesiProyecto
             {
                 conexion.Open();
 
-                // Consulta SQL para obtener la contraseña hasheada y el rol del usuario
-                string query = "SELECT Contraseña, Rol FROM Usuarios WHERE NombreUsuario = @username";
-
-                using (SqlCommand cmd = new SqlCommand(query, conexion))
+                using (SqlCommand cmd = new SqlCommand("ValidarLogin", conexion))
                 {
-                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@NombreUsuario", username);
 
                     // Ejecutar la consulta y obtener la contraseña y el rol del usuario
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -67,16 +64,6 @@ namespace EstesiProyecto
                             if (isPasswordValid)
                             {
                                 reader.Close();  // Cerrar el DataReader antes de ejecutar cualquier otro comando
-
-                                // Actualizar la fecha de la última sesión
-                                string updateQuery = "UPDATE Usuarios SET Ultima_Sesion = @UltimaSesion WHERE NombreUsuario = @username";
-
-                                using (SqlCommand updateCmd = new SqlCommand(updateQuery, conexion))
-                                {
-                                    updateCmd.Parameters.AddWithValue("@UltimaSesion", DateTime.Now);
-                                    updateCmd.Parameters.AddWithValue("@username", username);
-                                    updateCmd.ExecuteNonQuery();
-                                }
 
                                 // Abrir el formulario principal pasando el rol del usuario
                                 FormPrincipal formPrincipal = new FormPrincipal(userRole);

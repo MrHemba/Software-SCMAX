@@ -71,13 +71,11 @@ namespace EstesiProyecto
             {
                 conexion.Open();
 
-                // Consulta para insertar un nuevo usuario y dejar que el autoincremento maneje el UsuarioID
-                string query = @"INSERT INTO Usuarios (NombreUsuario, Contraseña, Rol, Fecha_Creacion, Estado) 
-                         VALUES (@NombreUsuario, @Contraseña, @Rol, @FechaCreacion, @Estado);
-                         SELECT SCOPE_IDENTITY();"; // Obtener el último ID insertado
-
-                using (SqlCommand cmd = new SqlCommand(query, conexion))
+                //LLamar a procedimiento almacenado
+                using (SqlCommand cmd = new SqlCommand("CrearUsuario", conexion))
                 {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
                     cmd.Parameters.AddWithValue("@NombreUsuario", username);
                     cmd.Parameters.AddWithValue("@Contraseña", password); // Contraseña hasheada
                     cmd.Parameters.AddWithValue("@Rol", rol); // Enviar el rol seleccionado

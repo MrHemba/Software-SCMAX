@@ -34,15 +34,12 @@ namespace EstesiProyecto
             {
                 conexion.Open();
 
-                string query;
                 SqlCommand cmd;
 
+                    cmd = new SqlCommand("ModUser", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@NombreUsuario", buscarNombre);
                
-                    query = "SELECT UsuarioID, NombreUsuario, Contraseña, Rol FROM Usuarios WHERE NombreUsuario = @nombreUsuario";
-                    cmd = new SqlCommand(query, conexion);
-                    cmd.Parameters.AddWithValue("@nombreUsuario", buscarNombre);
-               
-
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())
@@ -111,12 +108,10 @@ namespace EstesiProyecto
             try
             {
                 conexion.Open();
-                string query = @"UPDATE Usuarios 
-                         SET NombreUsuario = @NombreUsuario, Contraseña = @Contraseña, Rol = @Rol 
-                         WHERE UsuarioID = @UsuarioID";
-
-                using (SqlCommand cmd = new SqlCommand(query, conexion))
+               
+                using (SqlCommand cmd = new SqlCommand("ModificarUser", conexion))
                 {
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@NombreUsuario", username);
                     cmd.Parameters.AddWithValue("@Contraseña", password);
                     cmd.Parameters.AddWithValue("@Rol", rol); // Enviar el rol seleccionado
@@ -162,10 +157,9 @@ namespace EstesiProyecto
                     {
                         conexion.Open();
 
-                        // Consulta SQL para eliminar el usuario
-                        string query = "DELETE FROM Usuarios WHERE UsuarioID = @UsuarioID";
-                        using (SqlCommand cmd = new SqlCommand(query, conexion))
+                        using (SqlCommand cmd = new SqlCommand("DELETEUSER", conexion))
                         {
+                            cmd.CommandType = CommandType.StoredProcedure;
                             cmd.Parameters.AddWithValue("@UsuarioID", id);
                             int rowsAffected = cmd.ExecuteNonQuery();
 

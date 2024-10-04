@@ -176,7 +176,6 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblUser;
         private System.Windows.Forms.Label lblPassword;
