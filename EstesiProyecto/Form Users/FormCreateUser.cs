@@ -28,7 +28,7 @@ namespace EstesiProyecto
             {
                 conexion.Open();
                 // Consulta SQL para obtener los roles
-                string query = "SELECT Rol FROM Roles"; // Asume que la tabla Roles tiene una columna 'NombreRol'
+                string query = "SELECT Rol FROM TipoRol"; // Asume que la tabla Roles tiene una columna 'NombreRol'
 
                 using (SqlCommand cmd = new SqlCommand(query, conexion))
                 {
@@ -82,17 +82,17 @@ namespace EstesiProyecto
                     cmd.Parameters.AddWithValue("@FechaCreacion", fechaCreacion);  // Fecha de creación automática
                     cmd.Parameters.AddWithValue("@Estado", estado);  // Estado siempre en 1
 
-                    // Ejecutar la consulta y obtener el nuevo ID generado
                     object newId = cmd.ExecuteScalar();
 
                     if (newId != null)
                     {
-                        txtUsuarioID.Text = newId.ToString(); // Mostrar el ID autoincrementable en el Label
-                        MessageBox.Show("Usuario registrado correctamente.");
+                        // Mostrar el ID autoincrementable en el TextBox
+                        new.Text = newId.ToString();
+                        MessageBox.Show("Proveedor registrado correctamente.");
                     }
                     else
                     {
-                        MessageBox.Show("Error al registrar el usuario.");
+                        MessageBox.Show("Error al registrar el proveedor.");
                     }
                 }
             }
@@ -105,8 +105,6 @@ namespace EstesiProyecto
                 conexion.Close();
             }
         }
-
-
 
 
         private void btnCancelar_Click(object sender, EventArgs e)

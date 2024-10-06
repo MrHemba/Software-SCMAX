@@ -35,7 +35,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -46,18 +45,17 @@
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.txtRucCi = new System.Windows.Forms.TextBox();
-            this.txtID = new System.Windows.Forms.TextBox();
             this.txtRazonSocial = new System.Windows.Forms.TextBox();
             this.txtApellidosRep = new System.Windows.Forms.TextBox();
             this.txtCedula = new System.Windows.Forms.TextBox();
             this.cmbPais = new System.Windows.Forms.ComboBox();
-            this.cmbIdentificacion = new System.Windows.Forms.ComboBox();
             this.cmbCiudad = new System.Windows.Forms.ComboBox();
             this.cmbProvincia = new System.Windows.Forms.ComboBox();
             this.cmbContribuyente = new System.Windows.Forms.ComboBox();
             this.txtComercial = new System.Windows.Forms.TextBox();
             this.txtNombreRep = new System.Windows.Forms.TextBox();
             this.txtTelefono = new System.Windows.Forms.TextBox();
+            this.cmbIdentificacion = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lblInfoProv
@@ -131,16 +129,6 @@
             this.label7.TabIndex = 6;
             this.label7.Text = "Identificacion :";
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(804, 80);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(27, 16);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "Id : ";
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -210,6 +198,7 @@
             this.btnGuardr.TabIndex = 14;
             this.btnGuardr.Text = "Guardar";
             this.btnGuardr.UseVisualStyleBackColor = true;
+            this.btnGuardr.Click += new System.EventHandler(this.btnGuardr_Click);
             // 
             // btnLimpiar
             // 
@@ -240,15 +229,6 @@
             this.txtRucCi.Size = new System.Drawing.Size(178, 22);
             this.txtRucCi.TabIndex = 19;
             // 
-            // txtID
-            // 
-            this.txtID.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtID.Location = new System.Drawing.Point(837, 77);
-            this.txtID.Name = "txtID";
-            this.txtID.ReadOnly = true;
-            this.txtID.Size = new System.Drawing.Size(144, 22);
-            this.txtID.TabIndex = 21;
-            // 
             // txtRazonSocial
             // 
             this.txtRazonSocial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -277,25 +257,19 @@
             // 
             this.cmbPais.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbPais.FormattingEnabled = true;
+            this.cmbPais.Items.AddRange(new object[] {
+            "Ecuador"});
             this.cmbPais.Location = new System.Drawing.Point(114, 208);
             this.cmbPais.Name = "cmbPais";
             this.cmbPais.Size = new System.Drawing.Size(372, 24);
             this.cmbPais.TabIndex = 25;
             // 
-            // cmbIdentificacion
-            // 
-            this.cmbIdentificacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbIdentificacion.FormattingEnabled = true;
-            this.cmbIdentificacion.Location = new System.Drawing.Point(128, 75);
-            this.cmbIdentificacion.Name = "cmbIdentificacion";
-            this.cmbIdentificacion.Size = new System.Drawing.Size(117, 24);
-            this.cmbIdentificacion.TabIndex = 26;
-            this.cmbIdentificacion.SelectedIndexChanged += new System.EventHandler(this.cmbIdentificacion_SelectedIndexChanged);
-            // 
             // cmbCiudad
             // 
             this.cmbCiudad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCiudad.FormattingEnabled = true;
+            this.cmbCiudad.Items.AddRange(new object[] {
+            "Buena Fe"});
             this.cmbCiudad.Location = new System.Drawing.Point(114, 242);
             this.cmbCiudad.Name = "cmbCiudad";
             this.cmbCiudad.Size = new System.Drawing.Size(372, 24);
@@ -305,6 +279,8 @@
             // 
             this.cmbProvincia.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbProvincia.FormattingEnabled = true;
+            this.cmbProvincia.Items.AddRange(new object[] {
+            "Los Rios\t"});
             this.cmbProvincia.Location = new System.Drawing.Point(632, 216);
             this.cmbProvincia.Name = "cmbProvincia";
             this.cmbProvincia.Size = new System.Drawing.Size(372, 24);
@@ -314,6 +290,8 @@
             // 
             this.cmbContribuyente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbContribuyente.FormattingEnabled = true;
+            this.cmbContribuyente.Items.AddRange(new object[] {
+            "Rimpe"});
             this.cmbContribuyente.Location = new System.Drawing.Point(632, 185);
             this.cmbContribuyente.Name = "cmbContribuyente";
             this.cmbContribuyente.Size = new System.Drawing.Size(372, 24);
@@ -343,23 +321,31 @@
             this.txtTelefono.Size = new System.Drawing.Size(372, 22);
             this.txtTelefono.TabIndex = 32;
             // 
+            // cmbIdentificacion
+            // 
+            this.cmbIdentificacion.FormattingEnabled = true;
+            this.cmbIdentificacion.IntegralHeight = false;
+            this.cmbIdentificacion.Location = new System.Drawing.Point(128, 75);
+            this.cmbIdentificacion.Name = "cmbIdentificacion";
+            this.cmbIdentificacion.Size = new System.Drawing.Size(121, 21);
+            this.cmbIdentificacion.TabIndex = 33;
+            // 
             // FormProveedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1035, 388);
+            this.Controls.Add(this.cmbIdentificacion);
             this.Controls.Add(this.txtTelefono);
             this.Controls.Add(this.txtNombreRep);
             this.Controls.Add(this.txtComercial);
             this.Controls.Add(this.cmbContribuyente);
             this.Controls.Add(this.cmbProvincia);
             this.Controls.Add(this.cmbCiudad);
-            this.Controls.Add(this.cmbIdentificacion);
             this.Controls.Add(this.cmbPais);
             this.Controls.Add(this.txtCedula);
             this.Controls.Add(this.txtApellidosRep);
             this.Controls.Add(this.txtRazonSocial);
-            this.Controls.Add(this.txtID);
             this.Controls.Add(this.txtRucCi);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnLimpiar);
@@ -370,7 +356,6 @@
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -395,7 +380,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
@@ -406,17 +390,16 @@
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.TextBox txtRucCi;
-        private System.Windows.Forms.TextBox txtID;
         private System.Windows.Forms.TextBox txtRazonSocial;
         private System.Windows.Forms.TextBox txtApellidosRep;
         private System.Windows.Forms.TextBox txtCedula;
         private System.Windows.Forms.ComboBox cmbPais;
-        private System.Windows.Forms.ComboBox cmbIdentificacion;
         private System.Windows.Forms.ComboBox cmbCiudad;
         private System.Windows.Forms.ComboBox cmbProvincia;
         private System.Windows.Forms.ComboBox cmbContribuyente;
         private System.Windows.Forms.TextBox txtComercial;
         private System.Windows.Forms.TextBox txtNombreRep;
         private System.Windows.Forms.TextBox txtTelefono;
+        private System.Windows.Forms.ComboBox cmbIdentificacion;
     }
 }
