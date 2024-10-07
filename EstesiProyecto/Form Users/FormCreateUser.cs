@@ -87,7 +87,7 @@ namespace EstesiProyecto
                     if (newId != null)
                     {
                         // Mostrar el ID autoincrementable en el TextBox
-                        new.Text = newId.ToString();
+                        txtUsuarioID.Text = newId.ToString();
                         MessageBox.Show("Proveedor registrado correctamente.");
                     }
                     else

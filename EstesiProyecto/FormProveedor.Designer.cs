@@ -42,7 +42,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.btnGuardr = new System.Windows.Forms.Button();
-            this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.txtRucCi = new System.Windows.Forms.TextBox();
             this.txtRazonSocial = new System.Windows.Forms.TextBox();
@@ -200,20 +199,10 @@
             this.btnGuardr.UseVisualStyleBackColor = true;
             this.btnGuardr.Click += new System.EventHandler(this.btnGuardr_Click);
             // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(457, 321);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(81, 33);
-            this.btnLimpiar.TabIndex = 16;
-            this.btnLimpiar.Text = "Limpiar";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
-            // 
             // btnEliminar
             // 
             this.btnEliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminar.Location = new System.Drawing.Point(604, 321);
+            this.btnEliminar.Location = new System.Drawing.Point(592, 321);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(81, 33);
             this.btnEliminar.TabIndex = 17;
@@ -257,19 +246,16 @@
             // 
             this.cmbPais.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbPais.FormattingEnabled = true;
-            this.cmbPais.Items.AddRange(new object[] {
-            "Ecuador"});
             this.cmbPais.Location = new System.Drawing.Point(114, 208);
             this.cmbPais.Name = "cmbPais";
             this.cmbPais.Size = new System.Drawing.Size(372, 24);
             this.cmbPais.TabIndex = 25;
+            this.cmbPais.SelectedIndexChanged += new System.EventHandler(this.cmbPais_SelectedIndexChanged);
             // 
             // cmbCiudad
             // 
             this.cmbCiudad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCiudad.FormattingEnabled = true;
-            this.cmbCiudad.Items.AddRange(new object[] {
-            "Buena Fe"});
             this.cmbCiudad.Location = new System.Drawing.Point(114, 242);
             this.cmbCiudad.Name = "cmbCiudad";
             this.cmbCiudad.Size = new System.Drawing.Size(372, 24);
@@ -279,8 +265,6 @@
             // 
             this.cmbProvincia.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbProvincia.FormattingEnabled = true;
-            this.cmbProvincia.Items.AddRange(new object[] {
-            "Los Rios\t"});
             this.cmbProvincia.Location = new System.Drawing.Point(632, 216);
             this.cmbProvincia.Name = "cmbProvincia";
             this.cmbProvincia.Size = new System.Drawing.Size(372, 24);
@@ -329,6 +313,7 @@
             this.cmbIdentificacion.Name = "cmbIdentificacion";
             this.cmbIdentificacion.Size = new System.Drawing.Size(121, 21);
             this.cmbIdentificacion.TabIndex = 33;
+            this.cmbIdentificacion.SelectedIndexChanged += new System.EventHandler(this.cmbIdentificacion_SelectedIndexChanged_1);
             // 
             // FormProveedor
             // 
@@ -348,7 +333,6 @@
             this.Controls.Add(this.txtRazonSocial);
             this.Controls.Add(this.txtRucCi);
             this.Controls.Add(this.btnEliminar);
-            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnGuardr);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
@@ -387,7 +371,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button btnGuardr;
-        private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.TextBox txtRucCi;
         private System.Windows.Forms.TextBox txtRazonSocial;
