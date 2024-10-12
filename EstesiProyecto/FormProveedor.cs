@@ -8,7 +8,7 @@ namespace EstesiProyecto
 {
     public partial class FormProveedor : Form
     {
-        SqlConnection conexion = new SqlConnection("server=DESKTOP-9DGCSEO\\SQLEXPRESS01; database=SYSProvedores; integrated security=true");
+        ConexionSQL conexion = ConexionSQL.GetInstancia();
         public FormProveedor()
         {
             InitializeComponent();
@@ -17,8 +17,9 @@ namespace EstesiProyecto
             CargarPais();
             CargarProvincia();
             txtRucCi.Leave += new EventHandler(txtRucCi_Leave);
+         
         }
-
+        
         private void button3_Click(object sender, EventArgs e)
         {
             int id;
@@ -34,9 +35,11 @@ namespace EstesiProyecto
                 {
                     try
                     {
-                        conexion.Open();
+                        conexion.AbrirConexion();
+                        SqlConnection conn = conexion.ObtenerConexion();
 
-                        using (SqlCommand cmd = new SqlCommand("DeleteProveedor", conexion))
+
+                        using (SqlCommand cmd = new SqlCommand("DeleteProveedor",conn))
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.Parameters.AddWithValue("@Identificacion", id);
@@ -60,7 +63,7 @@ namespace EstesiProyecto
                     }
                     finally
                     {
-                        conexion.Close();
+                        conexion.CerrarConexion();
                     }
                 }
             }
@@ -105,11 +108,13 @@ namespace EstesiProyecto
         {
             try
             {
-                conexion.Open();
+                conexion.AbrirConexion();
+                SqlConnection conn = conexion.ObtenerConexion();
+
 
                 string query = "SELECT Indentificacion FROM Tipoid";
 
-                using (SqlCommand cmd = new SqlCommand(query, conexion))
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     using (SqlDataReader reader = cmd.ExecuteReader())
 
@@ -128,7 +133,7 @@ namespace EstesiProyecto
             }
             finally
             {
-                conexion.Close();
+                conexion.CerrarConexion();
             }
         }
        
@@ -140,11 +145,13 @@ namespace EstesiProyecto
 
             try
             {
-                conexion.Open();
+                conexion.AbrirConexion();
+                SqlConnection conn = conexion.ObtenerConexion();
+
 
                 while (!encontrado)
                 {
-                    using (SqlCommand cmd = new SqlCommand("BuscarProveedorPorBloques", conexion))
+                    using (SqlCommand cmd = new SqlCommand("BuscarProveedorPorBloques", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
@@ -192,10 +199,9 @@ namespace EstesiProyecto
             }
             finally
             {
-                if (conexion.State == ConnectionState.Open)
-                {
-                    conexion.Close();
-                }
+               
+                    conexion.CerrarConexion();
+                
             }
         }
 
@@ -232,10 +238,12 @@ namespace EstesiProyecto
                 }
 
                 // Abrir la conexión
-                conexion.Open();
+                conexion.AbrirConexion();
+                SqlConnection conn = conexion.ObtenerConexion();
+
 
                 // LLamar al procedimiento almacenado para insertar el proveedor
-                using (SqlCommand cmd = new SqlCommand("CrearProveedor", conexion))
+                using (SqlCommand cmd = new SqlCommand("CrearProveedor", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -268,7 +276,7 @@ namespace EstesiProyecto
             }
             finally
             {
-                conexion.Close();
+                conexion.CerrarConexion();
             }
         }
 
@@ -279,10 +287,11 @@ namespace EstesiProyecto
             try
             {
                 // Abrir la conexión
-                conexion.Open();
+                conexion.AbrirConexion();
+                SqlConnection conn = conexion.ObtenerConexion();
 
                 // Llamar al procedimiento almacenado para verificar si la identificación existe
-                using (SqlCommand cmd = new SqlCommand("VerificarIdentificacion", conexion))
+                using (SqlCommand cmd = new SqlCommand("VerificarIdentificacion", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Identificacion", identificacion);
@@ -302,30 +311,23 @@ namespace EstesiProyecto
             }
             finally
             {
-                conexion.Close();
+                conexion.CerrarConexion();
             }
 
             return existe;
         }
 
-        private void cmbPais_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cmbIdentificacion_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-
-        }
 
         private void CargarPais()
         {
             try
             {
-                conexion.Open();
+                conexion.AbrirConexion();
+                SqlConnection conn = conexion.ObtenerConexion();
+
                 string query = "SELECT Id_Pais, Pais FROM Pais";
 
-                using (SqlCommand cmd = new SqlCommand(query, conexion))
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -353,17 +355,19 @@ namespace EstesiProyecto
             }
             finally
             {
-                conexion.Close();
+                conexion.CerrarConexion();
             }
         }
         private void CargarProvincia()
         {
             try
             {
-                conexion.Open();
+                conexion.AbrirConexion();
+                SqlConnection conn = conexion.ObtenerConexion();
+
                 string query = "SELECT Id_Provincia, Provincia FROM Provincia";
 
-                using (SqlCommand cmd = new SqlCommand(query, conexion))
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -392,7 +396,7 @@ namespace EstesiProyecto
             }
             finally
             {
-                conexion.Close();
+                conexion.CerrarConexion();
             }
         }
         private void CargarCiudad()
@@ -400,10 +404,12 @@ namespace EstesiProyecto
 
             try
             {
-                conexion.Open();
+                conexion.AbrirConexion();
+                SqlConnection conn = conexion.ObtenerConexion();
+
                 string query = "SELECT Id_Ciudad, Nombre_Ciudad FROM Ciudad ";
 
-                using (SqlCommand cmd = new SqlCommand(query, conexion))
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                   
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -432,11 +438,14 @@ namespace EstesiProyecto
             }
             finally
             {
-                conexion.Close();
+                conexion.CerrarConexion();
             }
         }
-        
 
+        private void cmbCiudad_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

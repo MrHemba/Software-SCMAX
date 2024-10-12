@@ -18,7 +18,7 @@ namespace EstesiProyecto
             InitializeComponent();
         }
         // Conexión a la base de datos
-        SqlConnection conexion = new SqlConnection("server=DESKTOP-9DGCSEO\\SQLEXPRESS01; database=SYSProvedores; integrated security=true");
+        ConexionSQL conexion = ConexionSQL.GetInstancia();
         private void label2_Click(object sender, EventArgs e)
         {
 
@@ -42,9 +42,10 @@ namespace EstesiProyecto
 
             try
             {
-                conexion.Open();
+                conexion.AbrirConexion();
+                SqlConnection conn = conexion.ObtenerConexion();
 
-                using (SqlCommand cmd = new SqlCommand("ValidarLogin", conexion))
+                using (SqlCommand cmd = new SqlCommand("ValidarLogin", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -88,7 +89,7 @@ namespace EstesiProyecto
             }
             finally
             {
-                conexion.Close();
+                conexion.CerrarConexion();
             }
         }
 

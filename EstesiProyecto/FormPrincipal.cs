@@ -72,5 +72,11 @@ namespace EstesiProyecto
             FormProveedor formProveedor = new FormProveedor();
             formProveedor.Show();
         }
+
+        private void reporteProveedorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormReporte formReporte = new FormReporte();
+            formReporte.Show();
+        }
     }
 }

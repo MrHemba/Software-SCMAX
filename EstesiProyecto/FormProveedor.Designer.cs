@@ -250,7 +250,6 @@
             this.cmbPais.Name = "cmbPais";
             this.cmbPais.Size = new System.Drawing.Size(372, 24);
             this.cmbPais.TabIndex = 25;
-            this.cmbPais.SelectedIndexChanged += new System.EventHandler(this.cmbPais_SelectedIndexChanged);
             // 
             // cmbCiudad
             // 
@@ -260,6 +259,7 @@
             this.cmbCiudad.Name = "cmbCiudad";
             this.cmbCiudad.Size = new System.Drawing.Size(372, 24);
             this.cmbCiudad.TabIndex = 27;
+            this.cmbCiudad.SelectedIndexChanged += new System.EventHandler(this.cmbCiudad_SelectedIndexChanged);
             // 
             // cmbProvincia
             // 
@@ -313,7 +313,6 @@
             this.cmbIdentificacion.Name = "cmbIdentificacion";
             this.cmbIdentificacion.Size = new System.Drawing.Size(121, 21);
             this.cmbIdentificacion.TabIndex = 33;
-            this.cmbIdentificacion.SelectedIndexChanged += new System.EventHandler(this.cmbIdentificacion_SelectedIndexChanged_1);
             // 
             // FormProveedor
             // 

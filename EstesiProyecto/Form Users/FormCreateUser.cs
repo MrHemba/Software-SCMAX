@@ -14,7 +14,7 @@ namespace EstesiProyecto
 {
     public partial class FormCreateUser : Form
     {
-        SqlConnection conexion = new SqlConnection("server=DESKTOP-9DGCSEO\\SQLEXPRESS01; database=SYSProvedores; integrated security=true");
+        ConexionSQL conexion = ConexionSQL.GetInstancia();
         public FormCreateUser()
         {
             InitializeComponent();
@@ -26,11 +26,12 @@ namespace EstesiProyecto
         {
             try
             {
-                conexion.Open();
+                conexion.AbrirConexion();
+                SqlConnection conn = conexion.ObtenerConexion();
                 // Consulta SQL para obtener los roles
                 string query = "SELECT Rol FROM TipoRol"; // Asume que la tabla Roles tiene una columna 'NombreRol'
 
-                using (SqlCommand cmd = new SqlCommand(query, conexion))
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -48,7 +49,7 @@ namespace EstesiProyecto
             }
             finally
             {
-                conexion.Close();
+                conexion.CerrarConexion();
             }
         }
 
@@ -69,10 +70,11 @@ namespace EstesiProyecto
 
             try
             {
-                conexion.Open();
+                conexion.AbrirConexion();
+                SqlConnection conn = conexion.ObtenerConexion();
 
                 //LLamar a procedimiento almacenado
-                using (SqlCommand cmd = new SqlCommand("CrearUsuario", conexion))
+                using (SqlCommand cmd = new SqlCommand("CrearUsuario", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -102,7 +104,7 @@ namespace EstesiProyecto
             }
             finally
             {
-                conexion.Close();
+                conexion.CerrarConexion();
             }
         }
 

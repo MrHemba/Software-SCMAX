@@ -13,7 +13,7 @@ namespace EstesiProyecto
 {
     public partial class FormModUser : Form
     {
-        SqlConnection conexion = new SqlConnection("server=DESKTOP-9DGCSEO\\SQLEXPRESS01; database=SYSProvedores; integrated security=true");
+        ConexionSQL conexion = ConexionSQL.GetInstancia();
         public FormModUser()
         {
             InitializeComponent();
@@ -32,11 +32,12 @@ namespace EstesiProyecto
 
             try
             {
-                conexion.Open();
+                conexion.AbrirConexion();
+                SqlConnection conn = conexion.ObtenerConexion();
 
                 SqlCommand cmd;
 
-                    cmd = new SqlCommand("ModUser", conexion);
+                    cmd = new SqlCommand("ModUser", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@NombreUsuario", buscarNombre);
                
@@ -62,7 +63,7 @@ namespace EstesiProyecto
             }
             finally
             {
-                conexion.Close();
+                conexion.CerrarConexion();
             }
 
         }
@@ -76,9 +77,11 @@ namespace EstesiProyecto
         {
             try
             {
-                conexion.Open();
+                conexion.AbrirConexion();
+                SqlConnection conn = conexion.ObtenerConexion();
+
                 string query = "SELECT Rol FROM Roles"; // Cambia esto si tu tabla tiene un nombre diferente
-                SqlCommand cmd = new SqlCommand(query, conexion);
+                SqlCommand cmd = new SqlCommand(query, conn);
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -94,7 +97,7 @@ namespace EstesiProyecto
             }
             finally
             {
-                conexion.Close();
+                conexion.CerrarConexion();
             }
         }
 
@@ -107,9 +110,10 @@ namespace EstesiProyecto
 
             try
             {
-                conexion.Open();
-               
-                using (SqlCommand cmd = new SqlCommand("ModificarUser", conexion))
+                conexion.AbrirConexion();
+                SqlConnection conn = conexion.ObtenerConexion();
+
+                using (SqlCommand cmd = new SqlCommand("ModificarUser", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@NombreUsuario", username);
@@ -135,7 +139,7 @@ namespace EstesiProyecto
             }
             finally
             {
-                conexion.Close();
+                conexion.CerrarConexion();
             }
         }
 
@@ -155,9 +159,10 @@ namespace EstesiProyecto
                 {
                     try
                     {
-                        conexion.Open();
+                        conexion.AbrirConexion();
+                        SqlConnection conn = conexion.ObtenerConexion();
 
-                        using (SqlCommand cmd = new SqlCommand("DELETEUSER", conexion))
+                        using (SqlCommand cmd = new SqlCommand("DELETEUSER", conn))
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.Parameters.AddWithValue("@UsuarioID", id);
@@ -181,7 +186,7 @@ namespace EstesiProyecto
                     }
                     finally
                     {
-                        conexion.Close();
+                        conexion.CerrarConexion();
                     }
                 }
             }
