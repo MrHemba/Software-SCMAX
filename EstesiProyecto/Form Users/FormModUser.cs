@@ -80,7 +80,7 @@ namespace EstesiProyecto
                 conexion.AbrirConexion();
                 SqlConnection conn = conexion.ObtenerConexion();
 
-                string query = "SELECT Rol FROM Roles"; // Cambia esto si tu tabla tiene un nombre diferente
+                string query = "SELECT Rol FROM TipoRol"; // Cambia esto si tu tabla tiene un nombre diferente
                 SqlCommand cmd = new SqlCommand(query, conn);
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
