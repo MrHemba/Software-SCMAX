@@ -78,5 +78,10 @@ namespace EstesiProyecto
             FormReporte formReporte = new FormReporte();
             formReporte.Show();
         }
+
+        private void FormPrincipal_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

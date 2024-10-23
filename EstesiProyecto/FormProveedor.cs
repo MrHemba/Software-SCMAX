@@ -446,6 +446,11 @@ namespace EstesiProyecto
         {
 
         }
+
+        private void txtRucCi_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 
