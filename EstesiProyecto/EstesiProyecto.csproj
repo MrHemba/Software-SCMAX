@@ -87,6 +87,12 @@
     <Compile Include="FormCrearFactura.Designer.cs">
       <DependentUpon>FormCrearFactura.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormCrearNC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCrearNC.Designer.cs">
+      <DependentUpon>FormCrearNC.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormCrearFactura.resx">
       <DependentUpon>FormCrearFactura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCrearNC.resx">
+      <DependentUpon>FormCrearNC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPrincipal.resx">
       <DependentUpon>FormPrincipal.cs</DependentUpon>
