@@ -41,7 +41,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.dtpRecibido = new System.Windows.Forms.DateTimePicker();
             this.label14 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblTituloFac = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnGuardar
@@ -167,23 +167,23 @@
             this.label14.TabIndex = 58;
             this.label14.Text = "Fecha Recibido";
             // 
-            // label1
+            // lblTituloFac
             // 
-            this.label1.AutoSize = true;
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(303, 38);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(197, 33);
-            this.label1.TabIndex = 60;
-            this.label1.Text = "Crear Factura";
+            this.lblTituloFac.AutoSize = true;
+            this.lblTituloFac.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblTituloFac.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTituloFac.Location = new System.Drawing.Point(303, 38);
+            this.lblTituloFac.Name = "lblTituloFac";
+            this.lblTituloFac.Size = new System.Drawing.Size(197, 33);
+            this.lblTituloFac.TabIndex = 60;
+            this.lblTituloFac.Text = "Crear Factura";
             // 
             // FormCrearFactura
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(808, 382);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblTituloFac);
             this.Controls.Add(this.dtpRecibido);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.btnGuardar);
@@ -199,7 +199,6 @@
             this.Controls.Add(this.label4);
             this.Name = "FormCrearFactura";
             this.Text = "FormCrearFactura";
-            this.Load += new System.EventHandler(this.FormCrearFactura_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -220,6 +219,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DateTimePicker dtpRecibido;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTituloFac;
     }
 }

@@ -14,59 +14,61 @@ namespace EstesiProyecto
 
     public partial class FormCrearFactura : Form
     {
-        ConexionSQL conexion = ConexionSQL.GetInstancia();
-        public Factura NuevaFactura { get; private set; }
 
-        public FormCrearFactura()
+            ConexionSQL conexion = ConexionSQL.GetInstancia();
+            public Factura NuevaFactura { get; private set; }
+
+            // Constructor para crear una nueva factura
+            public FormCrearFactura()
+            {
+                InitializeComponent();
+                NuevaFactura = new Factura();  // Inicializar con una nueva factura
+            }
+        public string TituloFormulario
         {
-            InitializeComponent();
-           
+            set { lblTituloFac.Text = value; } // Asumiendo que tu label se llama lblTitulo
         }
 
-        private void btnGuardar_Click(object sender, EventArgs e)
-        {
+        // Constructor para editar una factura existente
+        public FormCrearFactura(Factura facturaAEditar) : this()
+            {
+         
+            // Cargar los datos de la factura en los controles
+            txtNFactura.Text = facturaAEditar.NFactura;
+                txtNRetencion.Text = facturaAEditar.NRetencion;
+                dtpFacturacion.Value = facturaAEditar.FechaFacturacion;
+                dtpVencimiento.Value = facturaAEditar.FechaVencimiento;
+                txtFacturado.Text = facturaAEditar.ValorFacturado.ToString();
+                dtpRecibido.Value = facturaAEditar.FechaRecibido;
+
+                // Asignar la factura existente para que se actualicen sus valores
+                NuevaFactura = facturaAEditar;
+            }
+
+            private void btnGuardar_Click(object sender, EventArgs e)
+            {
+            // Obtener las fechas de los DateTimePickers
+            DateTime fechaRecibida = dtpRecibido.Value; // Suponiendo que el DateTimePicker se llama dtpFechaRecibida
+            DateTime fechaFacturada = dtpFacturacion.Value; // Suponiendo que el DateTimePicker se llama dtpFechaFacturado
+
+            // Calcular la fecha de vencimiento sumando 30 días a la fecha recibida
+            DateTime fechaSugerido = fechaRecibida.AddDays(30);
            
-
-                //// Insertar el reporte de pago
-                //using (SqlCommand cmd = new SqlCommand("sp_InsertarReportePago", conn))
-                //{
-                //    cmd.CommandType = CommandType.StoredProcedure;
-
-                //    // Asignar parámetros
-                //    cmd.Parameters.AddWithValue("@Id_Factura", txtIdReporte.Text);
-                //    cmd.Parameters.AddWithValue("@Id_Sucursal", Convert.ToInt32(cmbSucursal.SelectedValue));
-                //    cmd.Parameters.AddWithValue("@Id_Proveedor", idProveedor); // Usar el Id_Proveedor obtenido
-                //    cmd.Parameters.AddWithValue("@Num_Factura", txtNFactura.Text);
-                //    cmd.Parameters.AddWithValue("@Num_Retencion", txtNRetencion.Text);
-                //    cmd.Parameters.AddWithValue("@Fecha_Facturacion", dtpFacturacion.Value);
-                //    cmd.Parameters.AddWithValue("@Fecha_Vencimiento", dtpVencimiento.Value);
-                //    cmd.Parameters.AddWithValue("@Fecha_Sugerida", dtpSugerido.Value);
-                //    cmd.Parameters.AddWithValue("@Num_NC", txtNNotaCredito.Text);
-                //    cmd.Parameters.AddWithValue("@Id_Motivo", Convert.ToInt32(cmbMotivo.SelectedValue));
-                //    cmd.Parameters.AddWithValue("@Neto_Pagar", Convert.ToDecimal(txtNetoCancelar.Text));
-                //    cmd.Parameters.AddWithValue("@Valor_Factura", Convert.ToDecimal(txtFacturado.Text));
-                //    cmd.Parameters.AddWithValue("@Valor_NC", Convert.ToDecimal(txtValorNC.Text));
-
-                //}
-            
-                    NuevaFactura = new Factura
-                    {
-                       
-                        NFactura = txtNFactura.Text,
-                        NRetencion = txtNRetencion.Text,
-                        FechaFacturacion = dtpFacturacion.Value,
-                        FechaVencimiento = dtpVencimiento.Value,
-                        ValorFacturado = Convert.ToDecimal(txtFacturado.Text),           
-                        FechaRecibido = dtpRecibido.Value
-                    };
-                this.DialogResult = DialogResult.OK;
-                this.Close(); // Cerrar el formulario
+            // Actualizar los datos de la factura con los valores de los controles
+            NuevaFactura.NFactura = txtNFactura.Text;
+                NuevaFactura.NRetencion = txtNRetencion.Text;
+                NuevaFactura.FechaFacturacion = dtpFacturacion.Value;
+                NuevaFactura.FechaVencimiento = dtpVencimiento.Value;
+                NuevaFactura.FechaRecibido = dtpRecibido.Value;
            
+                NuevaFactura.ValorFacturado = Convert.ToDecimal(txtFacturado.Text);
+            NuevaFactura.FechaSugerida = fechaSugerido;
+
+                this.DialogResult = DialogResult.OK;  // Indicar que se cerró correctamente
+                this.Close();
+            }
         }
 
-        private void FormCrearFactura_Load(object sender, EventArgs e)
-        {
-        }
         public class Factura
         {
            
@@ -84,4 +86,3 @@ namespace EstesiProyecto
             
         }
     }
-}

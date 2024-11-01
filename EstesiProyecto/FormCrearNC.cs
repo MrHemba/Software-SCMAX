@@ -12,29 +12,59 @@ namespace EstesiProyecto
 {
     public partial class FormCrearNC : Form
     {
-        public FormReporte formReporte;
-        private string numeroFactura;
+        public string NumeroFactura { get; set; }
+        public string NumeroNC { get; set; }
+        public decimal ValorNC { get; set; }
 
-        // Constructor que recibe una referencia al formulario principal (FormReporte)
-        public FormCrearNC(FormReporte formReporte, string factura)
+        private FormReporte formReporte;
+
+        // Constructor unificado que admite tanto crear como editar NC
+        public FormCrearNC(FormReporte parentForm, string factura, string numNC = "", decimal valorNC = 0)
         {
             InitializeComponent();
-            this.formReporte = formReporte; // Guardamos la referencia
-            numeroFactura = factura;
+            formReporte = parentForm;
+            NumeroFactura = factura;
+            NumeroNC = numNC;
+            ValorNC = valorNC;
+
+            // Inicializa los controles con los datos existentes si son válidos
+            txtnumFactura.Text = NumeroFactura;
+            txtNC.Text = numNC;
+            txtValorNC.Text = valorNC != 0 ? valorNC.ToString() : "";
+        }
+        public string TituloFormulario
+        {
+            set { lblTitulo.Text = value; } // Asumiendo que tu label se llama lblTitulo
         }
 
-        public void btnGuardar_Click(object sender, EventArgs e)
+
+        private void btnGuardar_Click(object sender, EventArgs e)
         {
-            // Obtén los datos de la NC
-            string numNC = txtNC.Text;
-            decimal valorNC = Convert.ToDecimal(txtValorNC.Text);
+            decimal valorNC;
 
-            // Llama a la función en el formulario principal para agregar la NC
-            formReporte.AgregarNC_Factura(numeroFactura, numNC, valorNC);
+            // Verifica si txtFacturado es nulo o está vacío, y asigna 0 si es el caso
+            if (string.IsNullOrEmpty(txtValorNC.Text))
+            {
+                valorNC = 0; // Asigna 0 si está vacío
+            }
+            else
+            {
+                valorNC = Convert.ToDecimal(txtValorNC.Text); // Realiza la conversión si tiene un valor
+            }
+            // Obtener los datos desde los controles y asignarlos a las propiedades
+            NumeroNC = txtNC.Text;
+            ValorNC = valorNC;
 
-            // Cierra el formulario de creación de NC
+            // Establece el resultado del diálogo como OK para indicar éxito
+            DialogResult = DialogResult.OK;
             this.Close();
         }
+
+        private void FormCrearNC_Load(object sender, EventArgs e)
+        {
+            // Cualquier lógica adicional al cargar el formulario
+        }
     }
+
 
 }

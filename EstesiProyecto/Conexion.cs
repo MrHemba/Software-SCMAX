@@ -21,7 +21,7 @@ namespace EstesiProyecto
         private ConexionSQL()
         {
             // Aquí estableces tu cadena de conexión
-            connectionString = "server=DESKTOP-9DGCSEO\\SQLEXPRESS01; database=SYSProvedores; integrated security=true";
+            connectionString = "server=MR_HEMBA\\SQLEXPRESS; database=SYSProvedores; integrated security=true";
             connection = new SqlConnection(connectionString);
         }
         // Método estático para obtener la instancia de la clase

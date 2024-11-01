@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,7 +15,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 namespace EstesiProyecto
 {
 
-    public partial class FormReporte : Form 
+    public partial class FormReporte : Form
     {
 
         ConexionSQL conexion = ConexionSQL.GetInstancia();
@@ -26,38 +27,96 @@ namespace EstesiProyecto
             CargarNuevoId();
             txtRucProveedor.Leave += new EventHandler(txtRucCi_Leave);
             dgvFactura.CellValueChanged += dgvFactura_CellValueChanged;
+            txtRucProveedor.Validating += Control_Validating;
+            cmbSucursal.Validating += Control_Validating;
+            txtRucProveedor.Validating += Control_Validating;
+            DeshabilitarControles();
+           
         }
+
+        private void DeshabilitarControles()
+        {
+            // Deshabilitar todos los botones
+            btnAgregar.Enabled = false;
+            btnModificar.Enabled = false;
+            btnQuitar.Enabled = false;
+            btnImprimir.Enabled = false;
+            // Agrega otros controles que necesites deshabilitar
+        }
+        private void HabilitarControles()
+        {
+            // Habilitar todos los botones
+            btnAgregar.Enabled = true;
+            btnModificar.Enabled = true;
+            btnQuitar.Enabled = true;
+            btnImprimir.Enabled=true;
+            
+        }
+        private void Control_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Control control = sender as Control;
+
+            if (control is TextBox textBox)
+            {
+                // Verifica si el TextBox está vacío
+                if (string.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    // Muestra un mensaje de advertencia con el nombre del TextBox
+                    MessageBox.Show($"Por favor, ingresa un dato", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    // Cancela el evento de validación
+                    e.Cancel = true;
+                    textBox.Focus(); // Regresar el foco al TextBox
+                }
+            }
+            else if (control is ComboBox comboBox)
+            {
+                // Verifica si no se ha seleccionado un elemento
+                if (comboBox.SelectedIndex == -1)
+                {
+                    // Muestra un mensaje de advertencia con el nombre del ComboBox
+                    MessageBox.Show($"Por favor, selecciona un valor ", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    // Cancela el evento de validación
+                    e.Cancel = true;
+                    comboBox.Focus(); // Regresar el foco al ComboBox
+                }
+            }
+        }
+
+
 
         private void ActualizarTotales()
         {
             decimal sumaValorFacturado = 0;
             decimal sumaValorNC = 0;
-            decimal totalNetoACancelar = 0;
 
             // Recorrer todas las filas del DataGridView
             foreach (DataGridViewRow row in dgvFactura.Rows)
             {
-                if (row.Cells["Valor Facturado"].Value != null)
+                // Validar y acumular el valor de "Valor Facturado"
+                if (row.Cells["Valor Facturado"].Value != null &&
+                    decimal.TryParse(row.Cells["Valor Facturado"].Value.ToString(), out decimal valorFacturado))
                 {
-                    sumaValorFacturado += Convert.ToDecimal(row.Cells["Valor Facturado"].Value);
+                    sumaValorFacturado += valorFacturado;
                 }
 
-                if (row.Cells["Valor NC"].Value != null)
+                // Validar y acumular el valor de "Valor NC"
+                if (row.Cells["Valor NC"].Value != null &&
+                    decimal.TryParse(row.Cells["Valor NC"].Value.ToString(), out decimal valorNC))
                 {
-                    sumaValorNC += Convert.ToDecimal(row.Cells["Valor NC"].Value);
+                    sumaValorNC += valorNC;
                 }
             }
 
-            // Calcular el total neto a cancelar (valor facturado - valor NC)
-            totalNetoACancelar = sumaValorFacturado - sumaValorNC;
+            // Calcular el total neto a cancelar
+            decimal totalNetoACancelar = sumaValorFacturado - sumaValorNC;
 
             // Actualizar los TextBox con los valores calculados
             txtFactura.Text = sumaValorFacturado.ToString("N2");
             txtTotalNC.Text = sumaValorNC.ToString("N2");
             txtNetoCancelar.Text = totalNetoACancelar.ToString("N2");
         }
-
-
         public void AgregarNC_Factura(string numFactura, string numNC, decimal valorNC)
         {
             // Buscar la fila de la factura seleccionada
@@ -83,7 +142,6 @@ namespace EstesiProyecto
                 ActualizarTotales();
             }
         }
-
         private void txtRucCi_Leave(object sender, EventArgs e)
         {
             // Obtener el valor del campo Identificación (RUC/CI)
@@ -97,7 +155,6 @@ namespace EstesiProyecto
         }
         private void FormReporte_Load(object sender, EventArgs e)
         {
-           
 
             // Crear el menú contextual
             ContextMenuStrip contextMenu = new ContextMenuStrip();
@@ -132,14 +189,49 @@ namespace EstesiProyecto
         {
             if (dgvFactura.SelectedRows.Count > 0)
             {
-                string facturaSeleccionada = dgvFactura.SelectedRows[0].Cells["Nº Factura"].Value.ToString();
+                // Obtener la fila seleccionada
+                DataGridViewRow filaSeleccionada = dgvFactura.SelectedRows[0];
 
-                // Pasar la referencia de 'this' al constructor de FormCrearNC
+                // Verificar si la fila está vacía
+                bool filaVacia = true;
+                foreach (DataGridViewCell cell in filaSeleccionada.Cells)
+                {
+                    // Verifica si la celda no está vacía
+                    if (cell.Value != null && !string.IsNullOrEmpty(cell.Value.ToString()))
+                    {
+                        filaVacia = false;
+                        break;
+                    }
+                }
+
+                // Si la fila está vacía, mostrar un mensaje
+                if (filaVacia)
+                {
+                    MessageBox.Show("La fila seleccionada está vacía. Por favor, seleccione una factura válida.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return; // Salir del método para evitar abrir el formulario
+                }
+
+                // Si la fila no está vacía, continuar con la lógica normal
+                string facturaSeleccionada = filaSeleccionada.Cells["Nº Factura"].Value.ToString();
+
+                // Pasar la referencia de 'this' y la factura seleccionada a FormCrearNC
                 FormCrearNC formAgregarNC = new FormCrearNC(this, facturaSeleccionada);
-                formAgregarNC.ShowDialog();
-            }
-        }
 
+                // Mostrar el formulario y esperar el resultado
+                if (formAgregarNC.ShowDialog() == DialogResult.OK)
+                {
+                    // Leer los valores de NC de FormCrearNC
+                    string numNC = formAgregarNC.NumeroNC;
+                    decimal valorNC = formAgregarNC.ValorNC;
+
+                    // Agregar una nueva fila de NC en el DataGridView debajo de la factura seleccionada
+                    int rowIndex = dgvFactura.SelectedRows[0].Index + 1;
+                    dgvFactura.Rows.Insert(rowIndex, "", "", facturaSeleccionada, "", "", "", "", "", numNC, "Devolucion", "", valorNC, "");  // Ajusta las columnas según el orden y los datos necesarios
+                }
+                ActualizarTotales();
+            }
+
+        }
         private void CargarSucursal()
         {
             try
@@ -189,7 +281,7 @@ namespace EstesiProyecto
 
                 Sucursal = cmbSucursal.Text,
                 Proveedor = txtResultProveedor.Text
-                
+
             };
 
 
@@ -207,15 +299,17 @@ namespace EstesiProyecto
                     nuevaFactura.FechaFacturacion.ToShortDateString(),
                     nuevaFactura.FechaVencimiento.ToShortDateString(),
                     nuevaFactura.FechaRecibido.ToShortDateString(),
+                    nuevaFactura.FechaSugerida.ToShortDateString(),
                     nuevaFactura.NotaCredito,
                     nuevaFactura.Motivo,
+                     nuevaFactura.ValorFacturado,
                     nuevaFactura.ValorNC,
-                    nuevaFactura.ValorFacturado,
+                   
                     nuevaFactura.NetoPagar
 
                 );
+                ActualizarTotales();
             }
-
         }
         private void CargarProveedor(string identificacion)
         {
@@ -244,6 +338,7 @@ namespace EstesiProyecto
                                 // Mostrar el nombre del proveedor en el TextBox correspondiente
                                 txtResultProveedor.Text = reader["Razon_Social"].ToString();
                                 encontrado = true; // Salir del bucle al encontrar el proveedor
+                                HabilitarControles();
                             }
                             else if (!reader.HasRows)
                             {
@@ -267,7 +362,6 @@ namespace EstesiProyecto
                 conexion.CerrarConexion();
             }
         }
-
         private void CargarNuevoId()
         {
             try
@@ -305,5 +399,119 @@ namespace EstesiProyecto
             ActualizarTotales();  // Recalcular los totales cuando cambia una celda
         }
 
+        private void btnQuitar_Click(object sender, EventArgs e)
+        {
+            if (dgvFactura.SelectedRows.Count > 0)
+            {
+                var selectedRow = dgvFactura.SelectedRows[0];
+                string tipoFila = selectedRow.Cells["Nota Credito"].Value?.ToString();
+
+                // Si la fila es una factura (sin valor en "Nota Credito")
+                if (string.IsNullOrEmpty(tipoFila))
+                {
+                    // Eliminar todas las filas relacionadas con la factura seleccionada
+                    string facturaNumero = selectedRow.Cells["Nº Factura"].Value.ToString();
+                    for (int i = dgvFactura.Rows.Count - 1; i >= 0; i--)
+                    {
+                        if (dgvFactura.Rows[i].Cells["Nº Factura"].Value?.ToString() == facturaNumero)
+                        {
+                            dgvFactura.Rows.RemoveAt(i);
+                        }
+                    }
+                }
+                else
+                {
+                    // Si es una nota de crédito, solo eliminar esa fila
+                    dgvFactura.Rows.Remove(selectedRow);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una fila para eliminar.");
+            }
+        }
+        private Factura ObtenerFacturaDeFilaSeleccionada(DataGridViewRow fila)
+        {
+            return new Factura
+            {
+                NFactura = fila.Cells["Nº Factura"].Value?.ToString(),
+                NRetencion = fila.Cells["Nº Retencion"].Value?.ToString(),
+                FechaFacturacion = Convert.ToDateTime(fila.Cells["Fecha Facturacion"].Value),
+                FechaVencimiento = Convert.ToDateTime(fila.Cells["Fecha Vencimiento"].Value),
+                ValorFacturado = Convert.ToDecimal(fila.Cells["Valor Facturado"].Value),
+                FechaRecibido = Convert.ToDateTime(fila.Cells["Fecha Recibido"].Value),
+                // Puedes agregar más campos si los tienes en la clase Factura
+            };
+        }
+
+        // Método para actualizar una fila en el DataGridView con los datos de una factura modificada
+        private void ActualizarFilaConFactura(DataGridViewRow fila, Factura factura)
+        {
+            fila.Cells["Nº Factura"].Value = factura.NFactura;
+            fila.Cells["Nº Retencion"].Value = factura.NRetencion;
+            fila.Cells["Fecha Facturacion"].Value = factura.FechaFacturacion.ToShortDateString();
+            fila.Cells["Fecha Vencimiento"].Value = factura.FechaVencimiento.ToShortDateString();
+            fila.Cells["Fecha Recibido"].Value = factura.FechaRecibido.ToShortDateString();
+            fila.Cells["Fecha Sugerida"].Value = factura.FechaRecibido.AddDays(30).ToShortDateString();
+            fila.Cells["Valor Facturado"].Value = factura.ValorFacturado;
+           
+            // Actualiza más campos si es necesario
+        }
+
+        // Método para abrir el formulario en modo edición
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            if (dgvFactura.SelectedRows.Count > 0)
+            {
+                var selectedRow = dgvFactura.SelectedRows[0];
+
+                // Comprobar si es una NC o una factura
+                if (selectedRow.Cells["Nota Credito"].Value != null && !string.IsNullOrEmpty(selectedRow.Cells["Nota Credito"].Value.ToString()))
+                {
+                    // Es una NC
+                    string numFactura = selectedRow.Cells["Nº Factura"].Value.ToString();
+                    string numNC = selectedRow.Cells["Nota Credito"].Value.ToString();
+                    decimal valorNC = Convert.ToDecimal(selectedRow.Cells["Valor NC"].Value);
+
+                    // Crear y mostrar el formulario para editar NC
+                    FormCrearNC formEditarNC = new FormCrearNC(this, numFactura, numNC, valorNC);
+                    formEditarNC.TituloFormulario = "Editar NC"; // Texto para el botón Crear NC
+                  
+
+                    if (formEditarNC.ShowDialog() == DialogResult.OK)
+                    {
+                        // Actualiza la fila de la NC con los nuevos valores ingresados
+                        selectedRow.Cells["Nota Credito"].Value = formEditarNC.NumeroNC;
+                        selectedRow.Cells["Valor NC"].Value = formEditarNC.ValorNC;
+                    }
+                }
+                else
+                {
+                    // Es una factura
+                    Factura facturaSeleccionada = ObtenerFacturaDeFilaSeleccionada(selectedRow);
+
+                    // Crear y mostrar el formulario para editar factura
+                    FormCrearFactura formEditarFactura = new FormCrearFactura(facturaSeleccionada);
+                    formEditarFactura.TituloFormulario = "Editar Factura"; // Texto para el botón Crear NC
+                 
+                    if (formEditarFactura.ShowDialog() == DialogResult.OK)
+                    {
+                        // Actualiza la fila de la factura con los datos editados
+                        ActualizarFilaConFactura(selectedRow, formEditarFactura.NuevaFactura);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una fila para editar.");
+            }
+        }
+
+        private void dgvFactura_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
+
+

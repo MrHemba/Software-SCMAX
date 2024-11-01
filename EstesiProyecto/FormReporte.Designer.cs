@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblUsuario = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnImprimir = new System.Windows.Forms.Button();
             this.dgvFactura = new System.Windows.Forms.DataGridView();
             this.btnAgregar = new System.Windows.Forms.Button();
@@ -38,7 +36,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtResultProveedor = new System.Windows.Forms.TextBox();
             this.txtRucProveedor = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblProveedor = new System.Windows.Forms.Label();
             this.cmbSucursal = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -51,31 +49,14 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtNetoCancelar = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.lblUsuario.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFactura)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // lblUsuario
-            // 
-            this.lblUsuario.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.lblUsuario.Location = new System.Drawing.Point(0, 616);
-            this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(1333, 22);
-            this.lblUsuario.TabIndex = 28;
-            this.lblUsuario.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(60, 17);
-            this.toolStripStatusLabel1.Text = "lblUsuario";
-            // 
             // btnImprimir
             // 
             this.btnImprimir.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnImprimir.Location = new System.Drawing.Point(855, 556);
+            this.btnImprimir.Location = new System.Drawing.Point(800, 556);
             this.btnImprimir.Name = "btnImprimir";
             this.btnImprimir.Size = new System.Drawing.Size(106, 40);
             this.btnImprimir.TabIndex = 30;
@@ -91,9 +72,9 @@
             this.dgvFactura.Location = new System.Drawing.Point(26, 168);
             this.dgvFactura.Name = "dgvFactura";
             this.dgvFactura.ReadOnly = true;
-            this.dgvFactura.Size = new System.Drawing.Size(1278, 367);
+            this.dgvFactura.Size = new System.Drawing.Size(1369, 367);
             this.dgvFactura.TabIndex = 31;
-
+            this.dgvFactura.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFactura_CellContentClick);
             // 
             // btnAgregar
             // 
@@ -109,12 +90,13 @@
             // btnQuitar
             // 
             this.btnQuitar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnQuitar.Location = new System.Drawing.Point(659, 556);
+            this.btnQuitar.Location = new System.Drawing.Point(619, 556);
             this.btnQuitar.Name = "btnQuitar";
             this.btnQuitar.Size = new System.Drawing.Size(106, 40);
             this.btnQuitar.TabIndex = 33;
             this.btnQuitar.Text = "Quitar";
             this.btnQuitar.UseVisualStyleBackColor = true;
+            this.btnQuitar.Click += new System.EventHandler(this.btnQuitar_Click);
             // 
             // btnModificar
             // 
@@ -125,13 +107,14 @@
             this.btnModificar.TabIndex = 34;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(464, 48);
+            this.label1.Location = new System.Drawing.Point(501, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(284, 39);
             this.label1.TabIndex = 35;
@@ -140,7 +123,7 @@
             // txtResultProveedor
             // 
             this.txtResultProveedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtResultProveedor.Location = new System.Drawing.Point(448, 122);
+            this.txtResultProveedor.Location = new System.Drawing.Point(503, 123);
             this.txtResultProveedor.Name = "txtResultProveedor";
             this.txtResultProveedor.ReadOnly = true;
             this.txtResultProveedor.Size = new System.Drawing.Size(262, 29);
@@ -150,21 +133,22 @@
             // 
             // txtRucProveedor
             // 
+            this.txtRucProveedor.AccessibleName = "lblProveedor";
             this.txtRucProveedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtRucProveedor.Location = new System.Drawing.Point(223, 123);
             this.txtRucProveedor.Name = "txtRucProveedor";
             this.txtRucProveedor.Size = new System.Drawing.Size(174, 26);
             this.txtRucProveedor.TabIndex = 39;
             // 
-            // label3
+            // lblProveedor
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(220, 87);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(107, 24);
-            this.label3.TabIndex = 38;
-            this.label3.Text = "Proveedor";
+            this.lblProveedor.AutoSize = true;
+            this.lblProveedor.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProveedor.Location = new System.Drawing.Point(220, 87);
+            this.lblProveedor.Name = "lblProveedor";
+            this.lblProveedor.Size = new System.Drawing.Size(107, 24);
+            this.lblProveedor.TabIndex = 38;
+            this.lblProveedor.Text = "Proveedor";
             // 
             // cmbSucursal
             // 
@@ -191,7 +175,7 @@
             this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.dataGridView1.Location = new System.Drawing.Point(814, 12);
+            this.dataGridView1.Location = new System.Drawing.Point(894, 12);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(392, 131);
@@ -202,7 +186,7 @@
             this.lblConciliacion.AutoSize = true;
             this.lblConciliacion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblConciliacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConciliacion.Location = new System.Drawing.Point(968, 9);
+            this.lblConciliacion.Location = new System.Drawing.Point(1048, 9);
             this.lblConciliacion.Name = "lblConciliacion";
             this.lblConciliacion.Size = new System.Drawing.Size(96, 15);
             this.lblConciliacion.TabIndex = 42;
@@ -211,7 +195,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(826, 48);
+            this.label4.Location = new System.Drawing.Point(906, 48);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(70, 13);
             this.label4.TabIndex = 43;
@@ -220,7 +204,7 @@
             // txtFactura
             // 
             this.txtFactura.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFactura.Location = new System.Drawing.Point(911, 40);
+            this.txtFactura.Location = new System.Drawing.Point(991, 40);
             this.txtFactura.Name = "txtFactura";
             this.txtFactura.Size = new System.Drawing.Size(89, 26);
             this.txtFactura.TabIndex = 44;
@@ -228,7 +212,7 @@
             // txtRet
             // 
             this.txtRet.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRet.Location = new System.Drawing.Point(911, 72);
+            this.txtRet.Location = new System.Drawing.Point(991, 72);
             this.txtRet.Name = "txtRet";
             this.txtRet.Size = new System.Drawing.Size(89, 26);
             this.txtRet.TabIndex = 46;
@@ -236,7 +220,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(845, 80);
+            this.label5.Location = new System.Drawing.Point(925, 80);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 13);
             this.label5.TabIndex = 45;
@@ -245,7 +229,7 @@
             // txtTotalNC
             // 
             this.txtTotalNC.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTotalNC.Location = new System.Drawing.Point(911, 104);
+            this.txtTotalNC.Location = new System.Drawing.Point(991, 104);
             this.txtTotalNC.Name = "txtTotalNC";
             this.txtTotalNC.Size = new System.Drawing.Size(89, 26);
             this.txtTotalNC.TabIndex = 48;
@@ -253,7 +237,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(845, 112);
+            this.label6.Location = new System.Drawing.Point(925, 112);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(49, 13);
             this.label6.TabIndex = 47;
@@ -262,7 +246,7 @@
             // txtNetoCancelar
             // 
             this.txtNetoCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNetoCancelar.Location = new System.Drawing.Point(1058, 72);
+            this.txtNetoCancelar.Location = new System.Drawing.Point(1138, 72);
             this.txtNetoCancelar.Name = "txtNetoCancelar";
             this.txtNetoCancelar.Size = new System.Drawing.Size(132, 26);
             this.txtNetoCancelar.TabIndex = 50;
@@ -271,7 +255,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(1070, 45);
+            this.label7.Location = new System.Drawing.Point(1150, 45);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(106, 16);
             this.label7.TabIndex = 49;
@@ -281,7 +265,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1333, 638);
+            this.ClientSize = new System.Drawing.Size(1426, 638);
             this.Controls.Add(this.txtNetoCancelar);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtTotalNC);
@@ -294,7 +278,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.txtResultProveedor);
             this.Controls.Add(this.txtRucProveedor);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblProveedor);
             this.Controls.Add(this.cmbSucursal);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -303,12 +287,9 @@
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.dgvFactura);
             this.Controls.Add(this.btnImprimir);
-            this.Controls.Add(this.lblUsuario);
             this.Name = "FormReporte";
             this.Text = "FormReporte";
             this.Load += new System.EventHandler(this.FormReporte_Load);
-            this.lblUsuario.ResumeLayout(false);
-            this.lblUsuario.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFactura)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -317,8 +298,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.StatusStrip lblUsuario;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.Button btnImprimir;
         private System.Windows.Forms.DataGridView dgvFactura;
         private System.Windows.Forms.Button btnAgregar;
@@ -327,7 +306,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtResultProveedor;
         private System.Windows.Forms.TextBox txtRucProveedor;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblProveedor;
         private System.Windows.Forms.ComboBox cmbSucursal;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView dataGridView1;
