@@ -19,6 +19,7 @@ namespace EstesiProyecto
     {
 
         ConexionSQL conexion = ConexionSQL.GetInstancia();
+        string idproveedor;
         public AgregarReporte Reporte { get; private set; }
         public FormReporte()
         {
@@ -83,9 +84,6 @@ namespace EstesiProyecto
                 }
             }
         }
-
-
-
         private void ActualizarTotales()
         {
             decimal sumaValorFacturado = 0;
@@ -339,6 +337,7 @@ namespace EstesiProyecto
                             {
                                 // Mostrar el nombre del proveedor en el TextBox correspondiente
                                 txtResultProveedor.Text = reader["Razon_Social"].ToString();
+                                idproveedor = reader["Identificacion"].ToString();
                                 encontrado = true; // Salir del bucle al encontrar el proveedor
                                 HabilitarControles();
                             }
@@ -526,6 +525,48 @@ namespace EstesiProyecto
         private void button1_Click(object sender, EventArgs e)
         {
 
+            // Abrir la conexión
+        //    conexion.AbrirConexion();
+        //    SqlConnection conn = conexion.ObtenerConexion();
+
+
+        //    // LLamar al procedimiento almacenado para insertar el proveedor
+        //    using (SqlCommand cmd = new SqlCommand("GenerarReporte", conn))
+        //    {
+        //        cmd.CommandType = CommandType.StoredProcedure;
+
+        //        cmd.Parameters.AddWithValue("@id_factura", "1");
+        //        cmd.Parameters.AddWithValue("@id_sucursal", cmbSucursal.SelectedValue.ToString());
+        //        cmd.Parameters.AddWithValue("@id_proveedor", idproveedor);
+        //        cmd.Parameters.AddWithValue("@num_factura", txtComercial.Text);
+        //        cmd.Parameters.AddWithValue("@Apellidos_Representante", txtApellidosRep.Text);
+        //        cmd.Parameters.AddWithValue("@Nombres_Representante", txtNombreRep.Text);
+        //        cmd.Parameters.AddWithValue("@Cedula", txtCedula.Text);
+        //        cmd.Parameters.AddWithValue("@Contribuyente", cmbContribuyente.SelectedItem.ToString());
+        //        cmd.Parameters.AddWithValue("@Pais", Convert.ToInt32(cmbPais.SelectedValue));
+        //        cmd.Parameters.AddWithValue("@Provincia", Convert.ToInt32(cmbProvincia.SelectedValue));
+        //        cmd.Parameters.AddWithValue("@Ciudad", Convert.ToInt32(cmbCiudad.SelectedValue));
+        //        cmd.Parameters.AddWithValue("@Telefono", txtTelefono.Text);
+        //        cmd.Parameters.AddWithValue("@Estado", "1");
+
+        //        // Ejecutar la consulta y obtener el nuevo ID generado
+        //        cmd.ExecuteNonQuery();
+        //        // Verificar si se seleccionó una ciudad
+
+
+        //        MessageBox.Show("Proveedor registrado correctamente.");
+        //        LimpiarCampos();
+        //    }
+        //}
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Error al conectar a la base de datos: " + ex.Message);
+        //    }
+        //    finally
+        //    {
+        //        conexion.CerrarConexion();
+        //    }
+        //}
         }
 
         private void btnImprimir_Click(object sender, EventArgs e)
