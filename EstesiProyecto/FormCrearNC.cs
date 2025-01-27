@@ -18,18 +18,22 @@ namespace EstesiProyecto
         public string NumeroFactura { get; set; }
         public string NumeroNC { get; set; }
         public decimal ValorNC { get; set; }
+
+        public string MotivoNC { get; set; }
      
 
         private FormReporte formReporte;
 
         // Constructor unificado que admite tanto crear como editar NC
-        public FormCrearNC(FormReporte parentForm, string factura, string numNC = "", decimal valorNC = 0)
+        public FormCrearNC(FormReporte parentForm, string Motivo, string factura, string numNC = "", decimal valorNC = 0)
         {
             InitializeComponent();
             formReporte = parentForm;
+            MotivoNC = Motivo;
             NumeroFactura = factura;
             NumeroNC = numNC;
             ValorNC = valorNC;
+           
             CargarMotivo();
 
             // Inicializa los controles con los datos existentes si son válidos
@@ -97,6 +101,9 @@ namespace EstesiProyecto
             // Obtener los datos desde los controles y asignarlos a las propiedades
             NumeroNC = txtNC.Text;
             ValorNC = valorNC;
+            MotivoNC = cmbMotivo.Text;
+
+          
 
             // Establece el resultado del diálogo como OK para indicar éxito
             DialogResult = DialogResult.OK;

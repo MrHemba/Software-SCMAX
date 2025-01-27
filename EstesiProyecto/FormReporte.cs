@@ -117,7 +117,7 @@ namespace EstesiProyecto
             txtTotalNC.Text = sumaValorNC.ToString("N2");
             txtNetoCancelar.Text = totalNetoACancelar.ToString("N2");
         }
-        public void AgregarNC_Factura(string numFactura, string numNC, decimal valorNC)
+        public void AgregarNC_Factura(string numFactura, string numNC, decimal valorNC, string Motivo)
         {
             // Buscar la fila de la factura seleccionada
             foreach (DataGridViewRow row in dgvFactura.Rows)
@@ -132,7 +132,7 @@ namespace EstesiProyecto
                     dgvFactura.Rows[rowIndex].Cells["Nº Factura"].Value = ""; // Vacío para no repetir el número de factura
                     dgvFactura.Rows[rowIndex].Cells["Nota Credito"].Value = numNC; // Número de NC
                     dgvFactura.Rows[rowIndex].Cells["Valor NC"].Value = valorNC; // Valor de la NC
-                    dgvFactura.Rows[rowIndex].Cells["Motivo"].Value = "Devolución"; // Motivo de la NC (puedes cambiar esto según lo que necesites)
+                    dgvFactura.Rows[rowIndex].Cells["Motivo"].Value = Motivo; // Motivo de la NC (puedes cambiar esto según lo que necesites)
 
                     // Puedes sumar los valores de NC y restarlos del valor total de la factura
                     decimal totalNeto = Convert.ToDecimal(row.Cells["Valor Facturado"].Value) - valorNC;
@@ -215,7 +215,7 @@ namespace EstesiProyecto
                 string facturaSeleccionada = filaSeleccionada.Cells["Nº Factura"].Value.ToString();
 
                 // Pasar la referencia de 'this' y la factura seleccionada a FormCrearNC
-                FormCrearNC formAgregarNC = new FormCrearNC(this, facturaSeleccionada);
+                FormCrearNC formAgregarNC = new FormCrearNC(this,"", facturaSeleccionada);
 
                 // Mostrar el formulario y esperar el resultado
                 if (formAgregarNC.ShowDialog() == DialogResult.OK)
@@ -223,10 +223,11 @@ namespace EstesiProyecto
                     // Leer los valores de NC de FormCrearNC
                     string numNC = formAgregarNC.NumeroNC;
                     decimal valorNC = formAgregarNC.ValorNC;
+                    string motivo = formAgregarNC.MotivoNC;
 
                     // Agregar una nueva fila de NC en el DataGridView debajo de la factura seleccionada
                     int rowIndex = dgvFactura.SelectedRows[0].Index + 1;
-                    dgvFactura.Rows.Insert(rowIndex, "", "", facturaSeleccionada, "", "", "", "", "", numNC, "Devolucion", "", valorNC, "");  // Ajusta las columnas según el orden y los datos necesarios
+                    dgvFactura.Rows.Insert(rowIndex, "", "", facturaSeleccionada, "", "", "", "", "", numNC, motivo, "", valorNC, "");  // Ajusta las columnas según el orden y los datos necesarios
                 }
                 ActualizarTotales();
             }
@@ -417,7 +418,8 @@ namespace EstesiProyecto
                         if (dgvFactura.Rows[i].Cells["Nº Factura"].Value?.ToString() == facturaNumero)
                         {
                             dgvFactura.Rows.RemoveAt(i);
-                           
+                            ActualizarTotales();
+                  
                         }
                         
                     }
@@ -475,9 +477,10 @@ namespace EstesiProyecto
                     string numFactura = selectedRow.Cells["Nº Factura"].Value.ToString();
                     string numNC = selectedRow.Cells["Nota Credito"].Value.ToString();
                     decimal valorNC = Convert.ToDecimal(selectedRow.Cells["Valor NC"].Value);
+                    string motivonc = selectedRow.Cells["Motivo"].Value.ToString();
 
                     // Crear y mostrar el formulario para editar NC
-                    FormCrearNC formEditarNC = new FormCrearNC(this, numFactura, numNC, valorNC);
+                    FormCrearNC formEditarNC = new FormCrearNC(this, motivonc, numFactura, numNC, valorNC);
                     formEditarNC.TituloFormulario = "Editar NC"; // Texto para el botón Crear NC
                   
 
