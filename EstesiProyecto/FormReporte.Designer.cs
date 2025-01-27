@@ -49,6 +49,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtNetoCancelar = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.btnGuardar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFactura)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -56,12 +57,13 @@
             // btnImprimir
             // 
             this.btnImprimir.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnImprimir.Location = new System.Drawing.Point(800, 556);
+            this.btnImprimir.Location = new System.Drawing.Point(936, 556);
             this.btnImprimir.Name = "btnImprimir";
             this.btnImprimir.Size = new System.Drawing.Size(106, 40);
             this.btnImprimir.TabIndex = 30;
             this.btnImprimir.Text = "Imprimir";
             this.btnImprimir.UseVisualStyleBackColor = true;
+            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
             // 
             // dgvFactura
             // 
@@ -158,6 +160,7 @@
             this.cmbSucursal.Name = "cmbSucursal";
             this.cmbSucursal.Size = new System.Drawing.Size(136, 28);
             this.cmbSucursal.TabIndex = 37;
+            this.cmbSucursal.SelectedIndexChanged += new System.EventHandler(this.cmbSucursal_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -261,11 +264,23 @@
             this.label7.TabIndex = 49;
             this.label7.Text = "Neto Cancelar";
             // 
+            // btnGuardar
+            // 
+            this.btnGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGuardar.Location = new System.Drawing.Point(776, 557);
+            this.btnGuardar.Name = "btnGuardar";
+            this.btnGuardar.Size = new System.Drawing.Size(106, 40);
+            this.btnGuardar.TabIndex = 51;
+            this.btnGuardar.Text = "Guardar";
+            this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.button1_Click);
+            // 
             // FormReporte
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1426, 638);
+            this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.txtNetoCancelar);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtTotalNC);
@@ -319,5 +334,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtNetoCancelar;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnGuardar;
     }
 }

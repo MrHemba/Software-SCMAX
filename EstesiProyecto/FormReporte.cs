@@ -272,6 +272,7 @@ namespace EstesiProyecto
                 conexion.CerrarConexion();
             }
         }
+   
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             FormCrearFactura formFactura = new FormCrearFactura();
@@ -416,7 +417,9 @@ namespace EstesiProyecto
                         if (dgvFactura.Rows[i].Cells["Nº Factura"].Value?.ToString() == facturaNumero)
                         {
                             dgvFactura.Rows.RemoveAt(i);
+                           
                         }
+                        
                     }
                 }
                 else
@@ -508,6 +511,21 @@ namespace EstesiProyecto
         }
 
         private void dgvFactura_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void cmbSucursal_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnImprimir_Click(object sender, EventArgs e)
         {
 
         }
